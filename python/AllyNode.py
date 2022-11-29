@@ -1,4 +1,5 @@
 import CharNode
+import Globals
 
 class AllyNode(CharNode):
     def __init(self, priority, maxHP, name, head = None, tail = None):
@@ -9,8 +10,10 @@ class AllyNode(CharNode):
         self.loadInstructions(name)
 
     def loadInstructions(self, name):
-        #TODO: Check database for name and return instructions as eval string
-        pass
+        for item in Globals.charRoot.findall('./friends'):
+            for child in item:
+                if child.tag == name:
+                    self.instructions = child.text
 
     def performTurn(self):
         eval(self.instructions)
