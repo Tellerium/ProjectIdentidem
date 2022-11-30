@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <characters>
 	<friends>
-		<friendDummy>pass</friendDummy>
+		<friendDummy>print("The Cake Is Not A Lie")</friendDummy>
 	</friends>
 	
 	<foes>
-		<foeDummy>pass</foeDummy>
+		<foeDummy>print("The Cake Is A Lie")</foeDummy>
 	</foes>
 </characters>
