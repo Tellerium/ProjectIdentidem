@@ -5,16 +5,16 @@ class TwoWayNode():
         self.head = head
         self.tail = tail
     
-    def setHead(self, newHead):
+    def set_head(self, newHead):
         self.head = newHead
 
-    def getHead(self):
+    def get_head(self):
         return self.head
 
-    def setTail(self, newTail):
+    def set_tail(self, newTail):
         self.tail = newTail
 
-    def getTail(self):
+    def get_tail(self):
         return self.tail
 
     def clone(self):
@@ -31,50 +31,50 @@ class CharNode(TwoWayNode):
         self.battleHP = maxHP
         self.abilityList = []
 
-    def getName(self):
+    def get_name(self):
         return self.NAME
 
-    def getPriority(self):
+    def get_priority(self):
         return self.priority
 
-    def getAI(self):
+    def get_AI(self):
         return self.IS_AI
     
-    def getAlly(self):
+    def get_Ally(self):
         return self.IS_ALLY
 
-    def setMaxHP(self, newMax):
+    def set_maxHP(self, newMax):
         self.maxHP = newMax
         
-    def getMaxHP(self):
+    def get_maxHP(self):
         return self.maxHP
     
-    def setBattleHP(self, newHP):
+    def set_battleHP(self, newHP):
         return self.newHP
 
-    def getBattleHP(self):
+    def get_battleHP(self):
         return self.battleHP
     
     def damage(self, damInt):
         self.battleHP -= damInt
     
-    def setAbilityList(self, newList):
+    def set_ability_list(self, newList):
         self.abilityList = newList
     
-    def getAbilityList(self):
+    def get_ability_list(self):
         return self.abilityList()
 
-    def addAbility(self, newAbility):
+    def add_ability(self, newAbility):
         self.abilityList.append(newAbility)
     
-    def removeAbility(self, targetAbility):
+    def remove_ability(self, targetAbility):
         self.abilityList.remove(targetAbility)
     
-    def performTurn(self):
+    def turn(self):
         pass
 
 class PlayerNode(CharNode):
-    def __init(self, priority, maxHP, name, head = None, tail = None):
+    def __init__(self, priority, maxHP, name, head = None, tail = None):
         super().__init__(priority, maxHP, name, head, tail)
         self.IS_AI = False
         self.IS_ALLY = True
@@ -87,16 +87,16 @@ class AllyNode(CharNode):
         self.instructions = "pass"
         self.loadInstructions()
 
-    def loadInstructions(self):
+    def load_instructions(self):
         for item in globals.charRoot.findall('./friends'):
             for child in item:
                 if child.tag == self.NAME:
                     self.instructions = child.text
 
-    def getInstructions(self):
+    def get_instructions(self):
         return self.instructions
 
-    def performTurn(self):
+    def turn(self):
         eval(self.instructions)
 
 class FoeNode(CharNode):
@@ -107,16 +107,16 @@ class FoeNode(CharNode):
         self.instructions = "pass"
         self.loadInstructions()
 
-    def loadInstructions(self):
+    def load_instructions(self):
         for item in globals.charRoot.findall('./foes'):
             for child in item:
                 if child.tag == self.NAME:
                     self.instructions = child.text
 
-    def getInstructions(self):
+    def get_instructions(self):
         return self.instructions
 
-    def performTurn(self):
+    def turn(self):
         eval(self.instructions)
 
 class LinkedList():
@@ -132,7 +132,7 @@ class LinkedList():
         #TODO: Pop the final node
         pass
 
-    def getLength(self):
+    def get_length(self):
         return(self.length)
 
 class CircularLinkedList(LinkedList):
@@ -147,9 +147,9 @@ class CircularLinkedList(LinkedList):
         #TODO: Same as insert
         pass
     
-    def getLength(self):
+    def get_length(self):
         return(self.length)
 
-    def ouroborosHelper(self):
+    def ouroboros_helper(self):
         #TODO: Feed the snake its tail
         pass
