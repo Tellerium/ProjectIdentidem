@@ -17,6 +17,9 @@ class TwoWayNode():
     def getTail(self):
         return self.tail
 
+    def clone(self):
+        return self
+
 class CharNode(TwoWayNode):
     def __init__(self, charName, priority, maxHP, head = None, tail = None):
         super().__init__(head, tail)

@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 
-def initialize():
+def init():
     global charTree
-    charTree = ET.parse('../xml/characters.xml')
+    charTree = ET.parse('./xml/characters.xml')
     global charRoot
     charRoot = charTree.getroot()
