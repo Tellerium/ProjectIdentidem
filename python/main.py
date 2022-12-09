@@ -24,9 +24,11 @@ def game():
 
 def title():
     #Initialize Window
+    TITLEBG = pygame.image.load("./assets/images/title.png")
+    TITLEBG = pygame.transform.scale(TITLEBG, (SCREEN))
     pygame.display.set_caption("Project Identidem")
-    WINDOW.fill("black")
-    onTitle = True
+    #WINDOW.fill("black")
+    WINDOW.blit(TITLEBG, (0,0))
     #Initialize Title & Instructions
     #Set Text
     titleText = get_font(64, 'title').render("Identidem", True, 'Purple')
@@ -180,4 +182,4 @@ def crossroads():
 if __name__ == '__main__':
     globals.init()
     game()
-    
+
