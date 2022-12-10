@@ -102,7 +102,7 @@ def title():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
@@ -131,7 +131,8 @@ def title():
         pygame.display.update()
 
 def new_Game():
-    globals.seed = globals.newSeed()
+    globals.seed = globals.new_seed()
+    globals.index = 0
     globals.frame = 'cross'
 
 def load_Game():
@@ -140,13 +141,13 @@ def load_Game():
 def options():
     pygame.display.set_caption('Options')
     WINDOW.fill("green")
-    
+
     while globals.frame == 'options':
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                
+
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         pygame.quit()
@@ -155,7 +156,7 @@ def options():
                         pygame.display.toggle_fullscreen()
                     if event.key == (pygame.K_z):
                         globals.frame = 'title'
-        
+
         pygame.display.update()
 
 def crossroads():
@@ -167,7 +168,7 @@ def crossroads():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                
+
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         pygame.quit()
@@ -176,10 +177,9 @@ def crossroads():
                         pygame.display.toggle_fullscreen()
                     if event.key == (pygame.K_z):
                         globals.frame = 'title'
-    
+
         pygame.display.update()
 
 if __name__ == '__main__':
     globals.init()
     game()
-

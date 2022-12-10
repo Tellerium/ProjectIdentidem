@@ -20,6 +20,38 @@ class TwoWayNode():
     def clone(self):
         return self
 
+class TreeNode(TwoWayNode):
+    def __init__(self, depth, maxDepth, head = None, tail = None):
+        super().__init__(head, tail)
+        self.index = globals.crossIndex
+        self.depth = depth
+        self.maxDepth = maxDepth
+        globals.crossIndex += 1
+        #print(self.index, self.depth, ['*']*depth)
+        if self.depth < maxDepth:
+            self.tail = [TreeNode(depth + 1, maxDepth, self), TreeNode(depth + 1, maxDepth, self)]
+        
+    def findIndex(self, index):
+        print("Found index", self.index)
+        if self.index == index:
+            return self
+        elif self.tail is not None:
+            leftBranch = self.tail[0].findIndex(index)
+            if leftBranch is not None and leftBranch.index == index:#TODO: Check this for redundancy
+                return leftBranch
+            rightBranch = self.tail[1].findIndex(index)
+            return rightBranch
+
+#if __name__ == '__main__':
+#    globals.init()
+#    testIndex = 63
+#    if testIndex >= globals.tri_sum(globals.maxDepth) or testIndex < 0:
+#        print("Bad Index")
+#    else:
+#        a = TreeNode(0,globals.maxDepth)
+#        target = a.findIndex(testIndex)
+#        print("Index", target.index, "Depth", target.depth)
+
 class CharNode(TwoWayNode):
     def __init__(self, charName, priority, maxHP, head = None, tail = None):
         super().__init__(head, tail)
