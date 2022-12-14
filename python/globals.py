@@ -57,7 +57,8 @@ def load():
 
 
 def new_seed():
-    newSeed = (int(math.sqrt((math.pi * math.cos(time.time()) * time.time()) ** 2) // 2))
+    seedTime = time.time()
+    newSeed = (int(math.sqrt((math.pi * math.cos(seedTime) * seedTime) ** 2) // 2))
     return newSeed
 
 def bloom():

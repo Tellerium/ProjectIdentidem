@@ -27,7 +27,7 @@ def title():
     WINDOW.fill("white")
     #TITLEBG = pygame.image.load("./assets/images/title.png")
     #TITLEBG = pygame.transform.scale(TITLEBG, (SCREEN))
-    pygame.display.set_caption("Project Identidem")
+    pygame.display.set_caption("Project_Identidem")
     #WINDOW.fill("black")
     #WINDOW.blit(TITLEBG, (0,0))
     #Initialize Title & Instructions
@@ -166,15 +166,15 @@ def options():
         pygame.display.update()
 
 def crossroads():
-    pygame.display.set_caption(str(globals.seed))
+    pygame.display.set_caption(f"Project_Identidem/{globals.seed}/{globals.crossTree.index}")
     WINDOW.fill("black")
 
     while globals.frame == 'cross':
         WINDOW.fill("black")
         floor = globals.crossTree
-        floorText = get_font(32, 'text').render(f"Floor: {floor.depth + 1} / {floor.maxDepth + 1}; Index: {floor.index}", True, "White")
+        floorText = get_font(32, 'text').render(f"Floor: {floor.depth + 1} / {floor.maxDepth + 1}", True, "White")
         floorRect = floorText.get_rect()
-        floorRect.move_ip(480, 72)
+        floorRect.move_ip(520, 72)
         WINDOW.blit(floorText, floorRect)
 
         for event in pygame.event.get():
@@ -191,16 +191,50 @@ def crossroads():
                         pygame.display.toggle_fullscreen()
                     if event.key == pygame.K_UP and floor.depth != 0:
                         globals.crossTree = floor.head
+                        pygame.display.set_caption(f"Project_Identidem/{globals.seed}/{globals.crossTree.index}")
                     if event.key == pygame.K_LEFT and floor.depth != floor.maxDepth:
                         globals.crossTree = floor.tail[0]
+                        pygame.display.set_caption(f"Project_Identidem/{globals.seed}/{globals.crossTree.index}")
                     if event.key == pygame.K_RIGHT and floor.depth != floor.maxDepth:
                         globals.crossTree = floor.tail[1]
-                        WINDOW.blit(floorText, floorRect)
+                        pygame.display.set_caption(f"Project_Identidem/{globals.seed}/{globals.crossTree.index}")
+
+
                     if event.key == (pygame.K_z):
                         globals.save()
                         globals.frame = 'title'
 
         pygame.display.update()
+
+def battle(encNum):
+    pygame.display.set_caption(f"Prjoect_Identidem/{globals.seed}/Encounter_{encNum}")
+    allyList = [] #TODO: x for x in global party
+    allyCount = len(allyList)
+    foeList = [] #TODO: Pull from encNum in xml
+    foeCount = len(foeList)
+    circuitList = [] #TODO: Sort the combination of both lists by priority
+    circuitLen = len(circuitList)
+    circuit = CircularLinkedList(circuitLen, circuitList)
+
+    while globals.frame == 'encounter':
+        WINDOW.fill("black")
+
+        if allyCount == 0:
+            globals.frame = "title"
+        if foeCount == 0:
+            globals.frame = "crossroads"
+        
+        #TODO: Draw Characters
+
+        for character in circuit.items:
+            if character.IS_AI == True:
+                eval(character.instructions)
+            else:
+                pass #TODO: Write player code
+
+        pygame.display.update()
+    
+    pygame.display.set_caption(f"Project_Identidem/{globals.seed}/{globals.crossTree.index}")
 
 if __name__ == '__main__':
     globals.init()
