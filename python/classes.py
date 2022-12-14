@@ -26,20 +26,20 @@ class TreeNode(TwoWayNode):
         self.index = globals.crossIndex
         self.depth = depth
         self.maxDepth = maxDepth
+        self.content = [globals.get_rand(self.index) % 2, globals.get_rand(self.index) % 9]
         globals.crossIndex += 1
-        #print(self.index, self.depth, ['*']*depth)
         if self.depth < maxDepth:
             self.tail = [TreeNode(depth + 1, maxDepth, self), TreeNode(depth + 1, maxDepth, self)]
         
-    def findIndex(self, index):
+    def find_index(self, index):
         print("Found index", self.index)
         if self.index == index:
             return self
         elif self.tail is not None:
-            leftBranch = self.tail[0].findIndex(index)
+            leftBranch = self.tail[0].find_index(index)
             if leftBranch is not None and leftBranch.index == index:#TODO: Check this for redundancy
                 return leftBranch
-            rightBranch = self.tail[1].findIndex(index)
+            rightBranch = self.tail[1].find_index(index)
             return rightBranch
 
 #if __name__ == '__main__':
@@ -120,7 +120,7 @@ class AllyNode(CharNode):
         self.loadInstructions()
 
     def load_instructions(self):
-        for item in globals.charRoot.findall('./friends'):
+        for item in globals.xRoot.findall('./characters/friends'):
             for child in item:
                 if child.tag == self.NAME:
                     self.instructions = child.text
@@ -140,7 +140,7 @@ class FoeNode(CharNode):
         self.loadInstructions()
 
     def load_instructions(self):
-        for item in globals.charRoot.findall('./foes'):
+        for item in globals.xRoot.findall('./characters/foes'):
             for child in item:
                 if child.tag == self.NAME:
                     self.instructions = child.text
