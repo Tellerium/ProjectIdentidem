@@ -2,15 +2,25 @@
 <content>
 	<characters>
 		<friends>
-			<friendDummy></friendDummy>
+			<Hannah>
+				<charName>Hannah</charName>
+				<priority>1</priority>
+				<maxHP>200</maxHP>
+			</Hannah>
 		</friends>
 		
 		<foes>
-			<foeDummy></foeDummy>
+			<foe0>
+				<charName>foe0</charName>
+				<priority>0</priority>
+				<maxHP>10</maxHP>
+			</foe0>
 		</foes>
 	</characters>
 	<encounters>
-
+		<enc0>
+			<foe0></foe0>
+		</enc0>
 	</encounters>
 	<items>
 
