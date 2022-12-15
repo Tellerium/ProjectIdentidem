@@ -56,7 +56,8 @@ def load():
 
 def new_seed():
     seedTime = time.time()
-    newSeed = (int(math.sqrt((math.pi * math.cos(seedTime) * seedTime) ** 2) // 2))
+    newSeed = str(int(math.sqrt((math.pi * math.cos(seedTime) * seedTime) ** 2) // 2))
+    newSeed = int(newSeed + newSeed[0:4] + newSeed[8] + newSeed[4:8])
     return newSeed
 
 def bloom():
@@ -77,49 +78,3 @@ def tri_sum(triNum):
     for n in range(0, triNum + 1):
         triSum += 2 ** n
     return triSum
-
-def parse_content(content):
-    encounterDict = {
-            '0':'',
-            '1':'',
-            '2':'',
-            '3':'',
-            '4':'',
-            '5':'',
-            '6':'',
-            '7':'',
-            '8':'',
-            '9':'',
-        }
-    allyDict = {
-            '0':'',
-            '1':'',
-            '2':'',
-            '3':'',
-            '4':'',
-            '5':'',
-            '6':'',
-            '7':'',
-            '8':'',
-            '9':'',
-        }
-    itemDict = {
-            '0':'',
-            '1':'',
-            '2':'',
-            '3':'',
-            '4':'',
-            '5':'',
-            '6':'',
-            '7':'',
-            '8':'',
-            '9':'',
-        }
-    
-    match content[0]:
-        case 0:
-            return('encounters', encounterDict.get(content[1]))
-        case 1:
-            pass
-        case 2:
-            pass

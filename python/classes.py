@@ -26,7 +26,7 @@ class TreeNode(TwoWayNode):
         self.index = globals.crossIndex
         self.depth = depth
         self.maxDepth = maxDepth
-        self.content = [globals.get_rand(self.index) % 2, globals.get_rand(self.index) % 9]
+        self.content = self.get_content()
         globals.crossIndex += 1
         if self.depth < maxDepth:
             self.tail = [TreeNode(depth + 1, maxDepth, self), TreeNode(depth + 1, maxDepth, self)]
@@ -41,16 +41,58 @@ class TreeNode(TwoWayNode):
                 return leftBranch
             rightBranch = self.tail[1].find_index(index)
             return rightBranch
+    
+    def get_content(self):
+        encounterDict = {
+            '0':'enc0',
+            '1':'enc1',
+            '2':'enc2',
+            '3':'enc3',
+            '4':'enc4',
+            '5':'enc5',
+            '6':'enc6',
+            '7':'enc7',
+            '8':'enc8',
+            '9':'enc9',
+        }
+        allyDict = {
+            '0':'ally0',
+            '1':'ally1',
+            '2':'ally2',
+            '3':'ally3',
+            '4':'ally4',
+            '5':'ally5',
+            '6':'ally6',
+            '7':'ally7',
+            '8':'ally8',
+            '9':'ally9',
+        }
+        itemDict = {
+            '0':'item0',
+            '1':'item1',
+            '2':'item2',
+            '3':'item3',
+            '4':'item4',
+            '5':'item5',
+            '6':'item6',
+            '7':'item7',
+            '8':'item8',
+            '9':'item9',
+        }
 
-#if __name__ == '__main__':
-#    globals.init()
-#    testIndex = 63
-#    if testIndex >= globals.tri_sum(globals.maxDepth) or testIndex < 0:
-#        print("Bad Index")
-#    else:
-#        a = TreeNode(0,globals.maxDepth)
-#        target = a.findIndex(testIndex)
-#        print("Index", target.index, "Depth", target.depth)
+        type = globals.get_rand(int(str(self.index)[0])) % 3
+        option = (globals.get_rand(int(str(self.index)[1])) % 10 if self.index >= 10 else globals.get_rand(int(str(self.index))) % 10)
+        match type:
+            case 2:
+                type = "Encounter"
+                option = encounterDict.get(str(option))
+            case 1:
+                type = "Ally"
+                option = allyDict.get(str(option))
+            case 0:
+                type = "Item"
+                option = itemDict.get(str(option))
+        return(type, option)
 
 class CharNode(TwoWayNode):
     def __init__(self, charName, priority, maxHP, head = None, tail = None):
@@ -82,7 +124,7 @@ class CharNode(TwoWayNode):
         return self.maxHP
     
     def set_battleHP(self, newHP):
-        return self.newHP
+        return newHP
 
     def get_battleHP(self):
         return self.battleHP
@@ -106,8 +148,8 @@ class CharNode(TwoWayNode):
         pass
 
 class PlayerNode(CharNode):
-    def __init__(self, priority, maxHP, name, head = None, tail = None):
-        super().__init__(priority, maxHP, name, head, tail)
+    def __init__(self, charName, priority, maxHP, head = None, tail = None):
+        super().__init__(charName, priority, maxHP, head, tail)
         self.IS_AI = False
         self.IS_ALLY = True
 
@@ -132,18 +174,20 @@ class AllyNode(CharNode):
         eval(self.instructions)
 
 class FoeNode(CharNode):
-    def __init__(self, priority, maxHP, name, head = None, tail = None):
-        super().__init__(priority, maxHP, name, head, tail)
+    def __init__(self, charName, priority, maxHP, head = None, tail = None):
+        super().__init__(charName, priority, maxHP, head, tail)
         self.IS_AI = True
         self.IS_ALLY = False
         self.instructions = "pass"
         self.loadInstructions()
 
     def load_instructions(self):
-        for item in globals.xRoot.findall('./characters/foes'):
-            for child in item:
-                if child.tag == self.NAME:
-                    self.instructions = child.text
+        self.instructions = "No Instructions"
+        # for item in globals.xRoot.findall('./characters/foes'):
+        #     for child in item:
+        #         if child.tag == self.NAME:
+        #             #self.instructions = child.text
+        #             self.instructions = "none"
 
     def get_instructions(self):
         return self.instructions
@@ -152,36 +196,46 @@ class FoeNode(CharNode):
         eval(self.instructions)
 
 class LinkedList():
-    def __init__(self, length = 0, items = []):
-        self.length = length
-        self.items = items
+    def __init__(self, items = []):
+        self.items = []
+        for item in items:
+            print("In,", item)
+            if len(self.items) != 0:
+                item.head = self.items[-1]
+            self.items.append(item)
+            if len(self.items) >= 2:
+                self.items[-2].tail = self.items[-1]
+            print("Attached,", self.items)
+        print("Items,", self.items)
+        self.focus = items[0]
     
-    def insert(self, item, index =- 1):
-        #TODO: Insert a TwoWayNode
-        pass
+    def insert(self, item):
+        item.head = self.items[-1]
+        item.tail = None
+        self.items.append(item)
 
     def pop(self, index = -1):
-        #TODO: Pop the final node
-        pass
+        self.items.pop(-1)
+        self.items[-1].tail = None
 
     def get_length(self):
-        return(self.length)
+        return(len(self.items))
+
+    def next(self):
+        self.focus = self.focus.tail
 
 class CircularLinkedList(LinkedList):
-    def __init__(self, length = 0, items = []):
-        super().__init__()
+    def __init__(self, items = []):
+        super().__init__(items)
+        self.ouroboros_helper()
 
-    def insert(self, item, index =- 1):
-        #TODO: Overwrite to include Ouroboros
-        pass
+    def insert(self, item):
+        super().insert()
+        self.ouroboros_helper()
 
     def pop(self, index = -1):
-        #TODO: Same as insert
-        pass
-    
-    def get_length(self):
-        return(self.length)
+        super().pop()
+        self.ouroboros_helper()
 
     def ouroboros_helper(self):
-        #TODO: Feed the snake its tail
-        pass
+        self.items[-1].tail = self.items[0]
