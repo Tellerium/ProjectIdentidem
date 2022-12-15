@@ -10,6 +10,7 @@ def init():
     global maxDepth
     global crossIndex
     global depthSum
+    global party
 
     xTree = ET.parse('./xml/content.xml')
     xRoot = xTree.getroot()
@@ -19,6 +20,7 @@ def init():
     maxDepth = 5
     depthSum = tri_sum(maxDepth)
     crossTree = bloom()
+    party = ["Hannah"]
 
 def save():
     saveDict = {
@@ -51,10 +53,6 @@ def load():
     crossIndex = 0
     baseTree = bloom()
     crossTree = baseTree.find_index(index)
-    
-
-
-
 
 def new_seed():
     seedTime = time.time()
@@ -73,7 +71,6 @@ def get_rand(pos):
         posIn = len(refSeed) - 1
     rand = int(refSeed[posIn])
     return(rand)
-
 
 def tri_sum(triNum):
     triSum = 0
@@ -118,3 +115,11 @@ def parse_content(content):
             '8':'',
             '9':'',
         }
+    
+    match content[0]:
+        case 0:
+            return('encounters', encounterDict.get(content[1]))
+        case 1:
+            pass
+        case 2:
+            pass

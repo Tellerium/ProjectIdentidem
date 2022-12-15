@@ -198,8 +198,6 @@ def crossroads():
                     if event.key == pygame.K_RIGHT and floor.depth != floor.maxDepth:
                         globals.crossTree = floor.tail[1]
                         pygame.display.set_caption(f"Project_Identidem/{globals.seed}/{globals.crossTree.index}")
-
-
                     if event.key == (pygame.K_z):
                         globals.save()
                         globals.frame = 'title'
@@ -208,10 +206,11 @@ def crossroads():
 
 def battle(encNum):
     pygame.display.set_caption(f"Prjoect_Identidem/{globals.seed}/Encounter_{encNum}")
-    allyList = [] #TODO: x for x in global party
+    allyList = globals.party
     allyCount = len(allyList)
     foeList = [] #TODO: Pull from encNum in xml
     foeCount = len(foeList)
+    globals.parse_content(globals.crossTree.content) #TODO: See Above
     circuitList = [] #TODO: Sort the combination of both lists by priority
     circuitLen = len(circuitList)
     circuit = CircularLinkedList(circuitLen, circuitList)
